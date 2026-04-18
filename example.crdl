@@ -1,0 +1,24 @@
+# Example CRDL file demonstrating the syntax
+
+# Basic routes without parameters
+GET /users -> get_users()
+POST /users -> create_user(req)
+GET /health -> health_check()
+
+# Routes with parameters
+GET /users/{int:id} -> show_user(resp, id)
+PUT /users/{int:id} -> update_user(req, id)
+DELETE /users/{int:id} -> delete_user(id)
+
+# Routes with multiple parameters
+GET /users/{int:userId}/posts/{int:postId} -> get_post(req, userId, postId)
+POST /users/{int:userId}/posts -> create_post(req, userId)
+
+# Routes with different parameter types
+GET /profiles/{string:username} -> show_user_by_name(resp, username)
+GET /products/{double:price}/range -> products_by_price(price)
+GET /categories/{uint:categoryId}/items -> get_category_items(categoryId)
+
+# Wildcard routes (catch-all)
+GET /files/{*} -> serve_static_file(req, resp)
+ANY /api/proxy/{*} -> proxy_request(req, resp)
