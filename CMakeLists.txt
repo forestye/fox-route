@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(crdl_compiler VERSION 1.0.0)
+project(fox-route VERSION 1.0.0)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -31,9 +31,9 @@ set(HEADERS
 )
 
 # 主要可执行文件
-add_executable(crdl_compiler ${SOURCES} ${HEADERS})
+add_executable(fox-route ${SOURCES} ${HEADERS})
 
-# crdl_func 工具
+# fox-route-func: 辅助工具，从 .crdl 中导出某个 handler 的函数签名
 set(CRDL_FUNC_SOURCES
     src/crdl_func.cpp
     src/lexer.cpp
@@ -44,23 +44,23 @@ set(CRDL_FUNC_SOURCES
     src/error_reporter.cpp
 )
 
-add_executable(crdl_func ${CRDL_FUNC_SOURCES} ${HEADERS})
+add_executable(fox-route-func ${CRDL_FUNC_SOURCES} ${HEADERS})
 
 # 安装配置
-install(TARGETS crdl_compiler crdl_func
+install(TARGETS fox-route fox-route-func
     RUNTIME DESTINATION bin
     COMPONENT runtime
 )
 
 # 安装示例文件（可选）
 install(FILES example.crdl
-    DESTINATION share/crdl_compiler/examples
+    DESTINATION share/fox-route/examples
     COMPONENT examples
 )
 
 # 安装文档文件（可选）
 install(FILES README.md spec.md
-    DESTINATION share/doc/crdl_compiler
+    DESTINATION share/doc/fox-route
     COMPONENT documentation
 )
 

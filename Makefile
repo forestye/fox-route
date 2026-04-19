@@ -30,9 +30,9 @@ install: build
 # 卸载 (需要 root 权限)
 uninstall:
 	@echo "从系统卸载..."
-	@sudo rm -f /usr/local/bin/crdl_compiler
-	@sudo rm -rf /usr/local/share/crdl_compiler
-	@sudo rm -rf /usr/local/share/doc/crdl_compiler
+	@sudo rm -f /usr/local/bin/fox-route
+	@sudo rm -rf /usr/local/share/fox-route
+	@sudo rm -rf /usr/local/share/doc/fox-route
 	@echo "卸载完成"
 
 # 构建并测试安装（到临时目录）
@@ -42,7 +42,7 @@ test-install: build
 	@cd build && make install DESTDIR=/tmp/crdl_install_test
 	@echo "测试安装完成，文件位于 /tmp/crdl_install_test"
 	@echo "测试可执行文件:"
-	@/tmp/crdl_install_test/usr/local/bin/crdl_compiler --help || true
+	@/tmp/crdl_install_test/usr/local/bin/fox-route --help || true
 
 # 显示帮助信息
 help:

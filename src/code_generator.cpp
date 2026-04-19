@@ -69,8 +69,8 @@ bool CodeGenerator::generate_handlers_h(const RadixTree& tree, const std::string
         ss << "#include <json/json.h>\n";
     }
 
-    ss << "#include \"httpserver/http_request.h\"\n";
-    ss << "#include \"httpserver/http_response.h\"\n\n";
+    ss << "#include \"fox-http/http_request.h\"\n";
+    ss << "#include \"fox-http/http_response.h\"\n\n";
 
     // Add multipart data structures if needed
     if (needs_multipart) {
@@ -181,9 +181,9 @@ bool CodeGenerator::generate_router_h(const AstRoot& ast, const std::string& out
     std::stringstream ss;
 
     ss << "#pragma once\n\n";
-    ss << "#include \"httpserver/http_handler.h\"\n";
-    ss << "#include \"httpserver/http_request.h\"\n";
-    ss << "#include \"httpserver/http_response.h\"\n";
+    ss << "#include \"fox-http/http_handler.h\"\n";
+    ss << "#include \"fox-http/http_request.h\"\n";
+    ss << "#include \"fox-http/http_response.h\"\n";
     ss << "#include <memory>\n";
     ss << "#include <string>\n";
     ss << "#include <unordered_map>\n";
@@ -194,12 +194,12 @@ bool CodeGenerator::generate_router_h(const AstRoot& ast, const std::string& out
     ss << "struct RouteHandler;\n";
     ss << "struct DynamicRoute;\n\n";
 
-    ss << "class Router : public httpserver::HttpHandler {\n";
+    ss << "class Router : public fox::http::HttpHandler {\n";
     ss << "public:\n";
     ss << "    Router();\n";
     ss << "    ~Router();\n\n";
-    ss << "    void handle(httpserver::HttpRequest& req,\n";
-    ss << "                httpserver::HttpResponse& resp) override;\n\n";
+    ss << "    void handle(fox::http::HttpRequest& req,\n";
+    ss << "                fox::http::HttpResponse& resp) override;\n\n";
     ss << "private:\n";
     ss << "    // Static routes: path -> (method -> handler)\n";
     ss << "    std::unordered_map<std::string, std::unordered_map<int, RouteHandler*>> static_routes_;\n\n";
@@ -219,7 +219,7 @@ bool CodeGenerator::generate_router_h(const AstRoot& ast, const std::string& out
         ss << "    std::vector<FilesystemRoute> filesystem_routes_;\n";
         ss << "    void serve_filesystem_file(const FilesystemRoute& route,\n";
         ss << "                               std::string_view url_path,\n";
-        ss << "                               httpserver::HttpResponse& resp);\n\n";
+        ss << "                               fox::http::HttpResponse& resp);\n\n";
     }
 
     ss << "    // Helper methods\n";
@@ -228,8 +228,8 @@ bool CodeGenerator::generate_router_h(const AstRoot& ast, const std::string& out
     ss << "                       const std::vector<PathSegment>& segments,\n";
     ss << "                       std::unordered_map<std::string, std::string>& params) const;\n";
     ss << "    void dispatch_handler(const RouteHandler& handler,\n";
-    ss << "                          httpserver::HttpRequest& req,\n";
-    ss << "                          httpserver::HttpResponse& resp,\n";
+    ss << "                          fox::http::HttpRequest& req,\n";
+    ss << "                          fox::http::HttpResponse& resp,\n";
     ss << "                          const std::unordered_map<std::string, std::string>& params);\n";
     ss << "};\n";
 
@@ -241,7 +241,7 @@ bool CodeGenerator::generate_router_cpp(const AstRoot& ast, const RadixTree& tre
 
     ss << "#include \"router.generated.h\"\n";
     ss << "#include \"handlers.h\"\n";
-    ss << "#include \"httpserver/http_util.h\"\n";
+    ss << "#include \"fox-http/http_util.h\"\n";
     ss << "#include <unordered_map>\n";
     ss << "#include <string>\n";
     ss << "#include <vector>\n";
@@ -284,9 +284,9 @@ bool CodeGenerator::generate_router_cpp(const AstRoot& ast, const RadixTree& tre
 
     ss << "\n";
     ss << "using namespace std;\n";
-    ss << "using httpserver::HttpRequest;\n";
-    ss << "using httpserver::HttpResponse;\n";
-    ss << "using httpserver::util::parse_form_urlencoded;\n\n";
+    ss << "using fox::http::HttpRequest;\n";
+    ss << "using fox::http::HttpResponse;\n";
+    ss << "using fox::http::util::parse_form_urlencoded;\n\n";
 
     // Add multipart parser function if needed
     if (needs_multipart) {
@@ -944,9 +944,9 @@ std::string CodeGenerator::generate_function_signature(const RouteInfo& route_in
         first = false;
 
         if (arg == "req") {
-            ss << "httpserver::HttpRequest& " << arg;
+            ss << "fox::http::HttpRequest& " << arg;
         } else if (arg == "resp") {
-            ss << "httpserver::HttpResponse& " << arg;
+            ss << "fox::http::HttpResponse& " << arg;
         } else if (arg == "form") {
             ss << "std::unordered_map<std::string, std::string> " << arg;
         } else if (arg == "body") {

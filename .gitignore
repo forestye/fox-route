@@ -17,7 +17,7 @@ generated/
 Thumbs.db
 
 # Compiled binaries
-crdl_compiler
+fox-route
 *.exe
 
 # Object files
